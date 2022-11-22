@@ -7,7 +7,7 @@ const Hack = () => {
       <p>HACK</p>
       <button onClick={onHack}>OK?</button>
       <p className="text-center text-gray-500 text-xs">
-        &copy;2022 Ynov Corp. All rights reserved.
+        &copy;2022 Ynov. All rights reserved.
       </p>
     </div>
   );
