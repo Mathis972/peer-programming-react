@@ -6,6 +6,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Hack from './components/Hack';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -17,17 +19,26 @@ const firebaseConfig = {
   appId: '1:944777676827:web:a141f8abf67edb181990be',
   measurementId: 'G-NTCJBKG9BJ',
 };
-console.log(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  {
+    path: '/hack',
+    element: <Hack />,
+  },
+]);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
 );
 

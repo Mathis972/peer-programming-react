@@ -7,11 +7,11 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
   const onLogin = async () => {
-    console.log('onll');
     try {
       const r = await signInWithEmailAndPassword(auth, username, password);
       if (r.user) {
         window.navigator.vibrate(200);
+        (window as Window).location = '/hack';
       }
     } catch (e) {
       setHasError(true);
