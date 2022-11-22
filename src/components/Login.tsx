@@ -1,7 +1,23 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../index';
+import { useState } from 'react';
+
 const Login = () => {
-  const onLogin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const onLogin = async () => {
     console.log('onll');
-    window.navigator.vibrate(200);
+    try {
+      const r = await signInWithEmailAndPassword(auth, username, password);
+      if (r.user) {
+        window.navigator.vibrate(200);
+      }
+    } catch (e) {
+      setHasError(true);
+      window.navigator.vibrate(2000);
+      console.error(e);
+    }
   };
   return (
     <div className="w-full max-w-xs">
@@ -18,6 +34,8 @@ const Login = () => {
             id="username"
             type="text"
             placeholder="username"
+            value={username}
+            onChange={(u) => setUsername(u.target.value)}
           ></input>
         </div>
         <div className="mb-6">
@@ -32,6 +50,8 @@ const Login = () => {
             id="password"
             type="password"
             placeholder="password"
+            value={password}
+            onChange={(p) => setPassword(p.target.value)}
           ></input>
           <p className="text-red-500 text-xs italic">
             Please choose a password.
@@ -41,11 +61,17 @@ const Login = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
+            onClick={onLogin}
           >
             Log In
           </button>
         </div>
       </form>
+      {hasError && (
+        <p className="text-red-500 p-5 text-center">
+          Une erreur a eu lieu avec cette connexion
+        </p>
+      )}
       <p className="text-center text-gray-500 text-xs">
         &copy;2022 Ynov Corp. All rights reserved.
       </p>
