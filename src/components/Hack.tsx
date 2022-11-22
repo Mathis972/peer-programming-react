@@ -7,6 +7,7 @@ const Hack = () => {
   const db = getDatabase();
 
   const [contacts, setContacts] = useState([]);
+  const supported = 'contacts' in navigator && 'ContactsManager' in window;
 
   const onHack = async () => {
     const supportedProperties = await navigator.contacts.getProperties();
@@ -29,14 +30,20 @@ const Hack = () => {
   return (
     <div className="w-full max-w-xs">
       <p>HACK</p>
-      <button onClick={onHack}>GROS BOUTTON </button>
-      {contacts.map((contact) => (
+      {!supported ? (
+        <p>pas compatible avec ce navigateur</p>
+      ) : (
         <div>
-          <strong>{contact.name}</strong>
-          <p>{contact.email.join(', ')}</p>
-          <p>{contact.tel.join(', ')}</p>
+          <button onClick={onHack}>GROS BOUTTON </button>
+          {contacts.map((contact) => (
+            <div>
+              <strong>{contact.name}</strong>
+              <p>{contact.email.join(', ')}</p>
+              <p>{contact.tel.join(', ')}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
